@@ -8,9 +8,12 @@ from django.http import HttpResponse
 from operationsHistory.models import History
 
 def export_history_to_xlsx(request):
-       startDate=request.GET.get('startDate')
-       print(startDate)
-       history_queryset = History.objects.all()
+       #get data from database 
+       startDate=request.GET.get('startDate','2019-01-01')
+       endDate=request.GET.get('endDate','2200-01-01')
+       history_queryset = History.objects.filter(updated_at__range=[startDate, endDate])
+       
+       #ExcelStyles
        headers_style=easyxf('pattern: pattern solid, fore_colour blue;'
                        'font: colour white, bold True;''borders: top thin , bottom thin, left thin, right thin;')
 
@@ -24,9 +27,10 @@ def export_history_to_xlsx(request):
        response['Content-Disposition'] = 'attachment; filename={date}-operations-history.xls'.format(
            date=datetime.now().strftime('%Y-%m-%d'),
        )
+        #create new excel
        book = xlwt.Workbook()
        
-       # Get active worksheet/tab
+
        worksheet =book.add_sheet("operations History")
 
        # Define the titles for columns
