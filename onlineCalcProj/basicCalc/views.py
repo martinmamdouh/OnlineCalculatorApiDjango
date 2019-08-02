@@ -16,12 +16,16 @@ class SimpleFilterBackend(BaseFilterBackend):
             name='expression',
             location='query',
             required=True,
-            type='string'
+            type='string',
+  
         )]
 #------------------------------------
 
 class OnlineCalculator(GenericAPIView):
+       
        filter_backends = (SimpleFilterBackend,)
+       
+       
        def get_serializer_class(self,*args,**kwargs):
               if self.request.method == 'POST':
                      return CalculatorPostSerializer
@@ -57,7 +61,11 @@ class OnlineCalculator(GenericAPIView):
 
 
        def get(self,request ,format=None):
-
+              '''
+              The expression to be evaluated. 
+              --The expression must be url encoded.
+              --The expression must be list of string.
+              '''
 
               self.__expression=request.GET.get('expression',['0'])
               self.__result=self.__useCalculator()
@@ -66,6 +74,10 @@ class OnlineCalculator(GenericAPIView):
               return JsonResponse(serializer)
 
        def post(self,request ,format=None):
+              '''
+              The expression to be evaluated. 
+              --The expression must be list of string.
+              '''
               
               calculatorPostSerializer=CalculatorPostSerializer(data=request.data)
               if calculatorPostSerializer.is_valid(): 
