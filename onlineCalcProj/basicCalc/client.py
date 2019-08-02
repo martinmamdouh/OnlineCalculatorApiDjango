@@ -8,7 +8,7 @@ def get():
 
 def post():
        res=requests.post('http://127.0.0.1:7070/megasoft/api/v1.0/calculate/',
-       data={'expression':['factorial(5)*pow(5,2)','sin(2*pi)','5+6*2/8']})
+       data={'expression':['factorial(5)*pow(5,2)','sin(ss2*pi)','5+6*2/8']})
        print(res.text)
 get()
 post()

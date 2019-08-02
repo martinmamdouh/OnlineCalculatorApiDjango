@@ -47,7 +47,7 @@ class Calculator:
 
                      error='Invalid Expression'
               finally:
-                     result={'result':ans,'error':error}
+                     result={'ans':ans,'error':error}
                      return result
 
 
