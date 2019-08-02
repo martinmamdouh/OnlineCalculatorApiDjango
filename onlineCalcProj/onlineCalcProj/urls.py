@@ -7,5 +7,6 @@ schema_view = get_swagger_view(title='MegaSoft API')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('megasoft/api/v1.0/', include('basicCalc.urls')),
-    path('megasoft/api/v1.0/docs', schema_view)
+    path('megasoft/api/v1.0/docs', schema_view),
+    path('megasoft/export/', include('exportHistory.urls')),
 ]

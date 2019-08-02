@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'basicCalc',
     'operationsHistory',
+    'exportHistory',
     'rest_framework_swagger',
 ]
 
