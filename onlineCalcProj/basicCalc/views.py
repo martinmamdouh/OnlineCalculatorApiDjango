@@ -5,31 +5,37 @@ from .serializer import CalculatorResponseSerializer,CalculatorPostSerializer
 from rest_framework.views import APIView
 from operationsHistory.models import History
 from rest_framework.generics import GenericAPIView
+from rest_framework.permissions import IsAuthenticated,AllowAny
 
 # ------------for UI docs-----------
+from rest_framework_swagger.renderers import OpenAPIRenderer, SwaggerUIRenderer
 from rest_framework.filters import BaseFilterBackend
 import coreapi
 
 class SimpleFilterBackend(BaseFilterBackend):
-    def get_schema_fields(self, view):
-        return [coreapi.Field(
-            name='expression',
-            location='query',
-            required=True,
-            type='string',
+
   
-        )]
+       def get_schema_fields(self, view):
+              return [coreapi.Field(
+                  name='expression',
+                  location='query',
+                  required=True,
+                  type='string',          
+              )]
 #------------------------------------
 
 class OnlineCalculator(GenericAPIView):
-       
+       permission_classes = [IsAuthenticated]
        filter_backends = (SimpleFilterBackend,)
        
-       
+       #override swagger get_serializer_class serializer
        def get_serializer_class(self,*args,**kwargs):
+
               if self.request.method == 'POST':
                      return CalculatorPostSerializer
               return CalculatorResponseSerializer
+
+
        def __init__(self):
               self.__result=None
               self.__expression=None
@@ -61,6 +67,7 @@ class OnlineCalculator(GenericAPIView):
 
 
        def get(self,request ,format=None):
+              
               '''
               The expression to be evaluated. 
               --The expression must be url encoded.

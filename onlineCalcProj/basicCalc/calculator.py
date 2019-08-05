@@ -33,7 +33,8 @@ class Calculator:
                             'cubrt': self.__cubeRoot,
                             'factorial': self.__factorial,
                             'cos': cos, 
-                            'sin': sin, 
+                            'sin': sin,
+                            'tan': tan, 
                             'pi': 3.141592653589793238462643383279502884197169399
                      })
             
