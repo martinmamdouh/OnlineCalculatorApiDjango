@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse
+from rest_framework.response import Response
 from .calculator import Calculator
 from .serializer import CalculatorResponseSerializer,CalculatorPostSerializer
 from rest_framework.views import APIView
@@ -69,29 +70,47 @@ class OnlineCalculator(GenericAPIView):
        def get(self,request ,format=None):
               
               '''
-              The expression to be evaluated. 
+              ?expression=[5*2,12/4] 
               --The expression must be url encoded.
               --The expression must be list of string.
               '''
 
               self.__expression=request.GET.get('expression',['0'])
               self.__result=self.__useCalculator()
-              serializer=self.__getSerializedResult()
+              data=self.__getSerializedResult()
               self.__saveHistory()
-              return JsonResponse(serializer)
+              if self.__result['ans']:
+                     status=200
+              else:
+                     status=400
+              return JsonResponse(data, status=status)
 
        def post(self,request ,format=None):
               '''
-              The expression to be evaluated. 
+              
               --The expression must be list of string.
+
+              { 'expression':
+                     [ '5+2',
+                     '5+6*2/8',
+                     'factorial(5)',
+                     'pow(10,2)',
+                     'tan(2*pi)',
+                     'pow(4+2,3)/sqrt(9)' ]
+              }
               '''
               
               calculatorPostSerializer=CalculatorPostSerializer(data=request.data)
               if calculatorPostSerializer.is_valid(): 
                      self.__expression=calculatorPostSerializer.data['expression']
                      self.__result=self.__useCalculator()
-                     serializer=self.__getSerializedResult()
+                     data=self.__getSerializedResult()
                      self.__saveHistory()
-                     return JsonResponse(serializer)
+                     
+                     if self.__result['ans']:
+                            status=200
+                     else:
+                            status=400
+                     return Response(data,status=status)
 
               return JsonResponse(calculatorPostSerializer.errors)
