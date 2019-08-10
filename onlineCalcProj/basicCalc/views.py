@@ -7,23 +7,8 @@ from rest_framework.views import APIView
 from operationsHistory.models import History
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated,AllowAny
+from .swaggerSchema import SimpleFilterBackend
 
-# ------------for UI docs-----------
-from rest_framework_swagger.renderers import OpenAPIRenderer, SwaggerUIRenderer
-from rest_framework.filters import BaseFilterBackend
-import coreapi
-
-class SimpleFilterBackend(BaseFilterBackend):
-
-  
-       def get_schema_fields(self, view):
-              return [coreapi.Field(
-                  name='expression',
-                  location='query',
-                  required=True,
-                  type='string',          
-              )]
-#------------------------------------
 
 class OnlineCalculator(GenericAPIView):
        permission_classes = [IsAuthenticated]
@@ -58,7 +43,6 @@ class OnlineCalculator(GenericAPIView):
 
        def __saveHistory(self):
 
-              print(self.__result)
               opsHistory=History(
                      expression=self.__expression,
                      ans=self.__result['ans'],
@@ -74,7 +58,7 @@ class OnlineCalculator(GenericAPIView):
               --The expression must be url encoded.
               --The expression must be list of string.
               '''
-
+              #get expression from URL or put default value ['0']
               self.__expression=request.GET.get('expression',['0'])
               self.__result=self.__useCalculator()
               data=self.__getSerializedResult()
@@ -111,6 +95,6 @@ class OnlineCalculator(GenericAPIView):
                             status=200
                      else:
                             status=400
-                     return Response(data,status=status)
+                     return JsonResponse(data,status=status)
 
               return JsonResponse(calculatorPostSerializer.errors)
