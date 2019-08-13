@@ -4,7 +4,7 @@ from configuration import ApiConfig
 
 def get():
        expression=urllib.parse.quote('[5+6]')
-       res=requests.get(f'{ApiConfig.hostname}/megasoft/api/v1.0/calculate/?expression={expression}',
+       res=requests.get(f'{ApiConfig.hostname}/megasoft/api/v1.0/calculate/?expresssion={expression}',
        headers=ApiConfig.headers)
        print(res.text)
        print(res.status_code)

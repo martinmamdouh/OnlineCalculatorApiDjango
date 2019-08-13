@@ -58,8 +58,8 @@ class OnlineCalculator(GenericAPIView):
               --The expression must be url encoded.
               --The expression must be list of string.
               '''
-              #get expression from URL or put default value ['0']
-              self.__expression=request.GET.get('expression',['0'])
+              #get expression from URL 
+              self.__expression=request.GET.get('expression',['invalid'])
               self.__result=self.__useCalculator()
               data=self.__getSerializedResult()
               self.__saveHistory()
@@ -97,4 +97,4 @@ class OnlineCalculator(GenericAPIView):
                             status=400
                      return JsonResponse(data,status=status)
 
-              return JsonResponse(calculatorPostSerializer.errors)
+              return JsonResponse(calculatorPostSerializer.errors,status=400)

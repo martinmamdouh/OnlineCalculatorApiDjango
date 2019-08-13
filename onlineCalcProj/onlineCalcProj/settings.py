@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'basicCalc',
     'operationsHistory',
     'exportHistory',
+    'django_createsuperuserwithpassword',
     
 ]
 CORS_ALLOW_HEADERS = (
