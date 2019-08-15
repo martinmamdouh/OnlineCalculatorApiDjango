@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'czqwy_s$v)jigqrqxkp_lux+kx0cdj2s18h1c(*1=j2@h55!@h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -58,6 +58,7 @@ CORS_ALLOW_HEADERS = (
     'x-csrftoken',
     'x-requested-with',
     'No-Auth',
+    
 )
 CORS_ORIGIN_ALLOW_ALL = True
 MIDDLEWARE = [
