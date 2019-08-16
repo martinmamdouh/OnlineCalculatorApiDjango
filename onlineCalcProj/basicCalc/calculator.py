@@ -1,6 +1,6 @@
 import re
 from math import pow,sqrt,sin,cos,tan,sinh,cosh,tanh 
-from functools import reduce
+#from functools import reduce
 # Result Object Interface
 
 
@@ -45,7 +45,6 @@ class Calculator:
                      ans=self.__evaluate(expression)
               except Exception as err:
                      print(err)
-
                      error='Invalid Expression'
               finally:
                      result={'ans':ans,'error':error}

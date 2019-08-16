@@ -4,7 +4,6 @@ from datetime import timedelta
 import xlwt
 from xlwt import Workbook,XFStyle,Borders, Pattern, Font, easyxf
 from django.http import HttpResponse
-
 from operationsHistory.models import History
 
 def export_history_to_xlsx(request):
@@ -49,7 +48,7 @@ def export_history_to_xlsx(request):
            worksheet.write(row_num,col_num,column_title,headers_style)
 
 
-       # Iterate through all movies
+       # Iterate through all history_queryset
        for operation in history_queryset:
               row_num += 1
 

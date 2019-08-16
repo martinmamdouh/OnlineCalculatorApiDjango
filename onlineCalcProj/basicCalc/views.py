@@ -23,13 +23,15 @@ class OnlineCalculator(GenericAPIView):
 
 
        def __init__(self):
-              self.__result=None
               self.__expression=None
-
+              self.__result=None
+              
 
        def __useCalculator(self):
               calculator=Calculator()
+              print(self.__expression)
               self.__expression=str(self.__expression).replace('\'','').replace('\"','')
+              print(self.__expression)
               result=calculator.calculate(self.__expression)
               return result
 
